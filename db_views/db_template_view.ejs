@@ -1,0 +1,11 @@
+<h2>
+
+</h2>
+
+<% if(data:length) {  
+ 	for(var i = 0; i < data.length; i++) { %>
+<% i+1  %> |
+<% data[i].fullname %> | 
+<% data[i].role %> 
+<% } 
+} %>

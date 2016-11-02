@@ -1,0 +1,27 @@
+<div>Chat Room</div>
+<div id="pesan" style="border: 1px solid #ccc; "></div>
+<div>
+	<input type="text" name="msg" id="content_msg" />
+	<input type="button" value="Send Message" id="msg" />
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+	var socket   = io.connect("http://localhost:8080");
+	
+	//A User is asked for their username
+	var username = prompt("Your Username?");
+
+	//It's sent with the signal "little_newbie" (to differentiate from 'message')
+	socket.emit('add_username', username);
+	//A Dialog box is displayed when the server sends us a 'message'
+	socket.on('message', function(message){
+		$('#pesan').append('<br>' + message);
+	});
+	//When the button is clicked, a "message" is sent to server
+	$('#msg').click(function(message){
+		$('#pesan').append('<br>' + $('#content_msg').val());
+		socket.emit('message', $('#content_msg').val());
+	});
+</script>
